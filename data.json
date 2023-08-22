@@ -1,0 +1,13 @@
+{
+    "title": "One Cup Tea",
+    "icon": "./images/game_icon_OCT.ico",
+    "background-img": "./images/background.jpg",
+    "gastove": "./images/gastove.png",
+    "cup": "./images/cup.png",
+    "stone": "./images/stone.png",
+    "sugar": "./images/sugar.png",
+    "tea_leaves": "./images/tea_leaves.png",
+    "milk": "./images/milk.png",
+    "water": "./images/water.png",
+    "database": "./data.txt"
+}
