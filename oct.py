@@ -21,6 +21,7 @@ dataMoney = {
     "coins": 0
 }
 
+
 with open("money.json", "r+") as dmf:
     dataMoney = json.load(dmf)
 
@@ -43,27 +44,22 @@ cup_rect = CUP.get_rect()
 FONT = pygame.font.Font("./font/Square.ttf", 30)
 
 
-stone_size = 50
 STONE = pygame.image.load(data['stone'])
 stone_rect = STONE.get_rect()
 
-sugar_size = 50
 SUGAR = pygame.image.load(data['sugar'])
 sugar_rect = SUGAR.get_rect()
 
-tea_leaves_size = 50
 TEA_LEAVES = pygame.image.load(data['tea_leaves'])
 tea_leaves_rect = TEA_LEAVES.get_rect()
 
-milk_size = 50
 MILK = pygame.image.load(data['milk'])
 milk_rect = MILK.get_rect()
 
-
-water_size = 50
 WATER = pygame.image.load(data['water'])
 water_rect = WATER.get_rect()
 
+item_size = 50
 item_fall_limit_right = 95
 item_fall_limit_left = 280
 
@@ -74,7 +70,7 @@ s = 'sounds'
 cup_breaking_sound = pygame.mixer.Sound(os.path.join(s, 'cup-breaking-sound.mp3'))
 item_collect_sound = pygame.mixer.Sound(os.path.join(s, 'item-collect-sound.mp3'))
 tea_was_made_sound = pygame.mixer.Sound(os.path.join(s, 'tea-made-sound.wav'))
-endless_mode_coin_collect_sound = pygame.mixer.Sound(os.path.join(s, 'endless-mode-coin-collect-sound.wav'))
+countless_mode_coin_collect_sound = pygame.mixer.Sound(os.path.join(s, 'countless-mode-coin-collect-sound.wav'))
 
 
 def draw(image, coordix, coordiy):
@@ -102,37 +98,35 @@ class octgame:
         CUP_X_ADDITION = 5
         gastove_x = 300
 
-        stone_x = gastove_width + round(random.uniform(stone_size //
-                              2, gastove_x - stone_size // 2))
-        stone_y = -stone_size
+        add_number = 1
+
+        item_x = gastove_width + round(random.uniform(item_size //
+                              2, gastove_x - item_size // 2))
+        stone_y = -item_size
         stone_speed = 10
 
-        sugar_number = 1
-        sugar_x = gastove_width + round(random.uniform(sugar_size //
-                              2, gastove_x - sugar_size // 2))
-        sugar_y = -sugar_size
+        sugar_x = gastove_width + round(random.uniform(item_size //
+                              2, gastove_x - item_size // 2))
+        sugar_y = -item_size
         sugar_speed = 5
         sugar_count = []
 
-        tea_leaves_number = 1
         tea_leaves_x = gastove_width + \
-            round(random.uniform(tea_leaves_size // 2,
-                  gastove_x - tea_leaves_size // 2))
-        tea_leaves_y = -tea_leaves_size
+            round(random.uniform(item_size // 2,
+                  gastove_x - item_size // 2))
+        tea_leaves_y = -item_size
         tea_leaves_speed = 3
         tea_leaves_count = []
 
-        milk_number = 1
-        milk_x = gastove_width + round(random.uniform(milk_size //
-                             2, gastove_x - milk_size // 2))
-        milk_y = -milk_size
+        milk_x = gastove_width + round(random.uniform(item_size //
+                             2, gastove_x - item_size // 2))
+        milk_y = -item_size
         milk_speed = 7
         milk_count = []
 
-        water_number = 1
-        water_x = gastove_width + round(random.uniform(water_size //
-                              2, gastove_x - water_size // 2))
-        water_y = -water_size
+        water_x = gastove_width + round(random.uniform(item_size //
+                              2, gastove_x - item_size // 2))
+        water_y = -item_size
         water_speed = 7
         water_count = []
 
@@ -147,7 +141,7 @@ class octgame:
         def upPos():
             # update cup_rect position
             cup_rect.move_ip(cup_x - cup_rect.x, cup_y - cup_rect.y)
-            stone_rect.move_ip(stone_x - stone_rect.x, stone_y - stone_rect.y)
+            stone_rect.move_ip(item_x - stone_rect.x, stone_y - stone_rect.y)
             sugar_rect.move_ip(sugar_x - sugar_rect.x, sugar_y - sugar_rect.y)
             tea_leaves_rect.move_ip(tea_leaves_x - tea_leaves_rect.x, tea_leaves_y - tea_leaves_rect.y)
             milk_rect.move_ip(milk_x - milk_rect.x, milk_y - milk_rect.y)
@@ -179,6 +173,10 @@ class octgame:
                 cup_x -= CUP_X_ADDITION
             if keys[pygame.K_RIGHT] and cup_x <= gastove_x + gastove_x+15:
                 cup_x += CUP_X_ADDITION
+            if keys[pygame.K_SPACE]:
+                startormm = messagebox.askyesno("One Cup Tea", "The game is paused, click yes to start or no to go to main menu.")
+                if not startormm:
+                    octmm.octmainmenu.main_menu()
 
             draw(BACKGROUND, 0, 0)
             draw(GASTOVE, 300, 325)
@@ -188,34 +186,34 @@ class octgame:
                 button.update(WIN)
 
             if stone_y > HEIGHT:
-                stone_x = item_fall_limit_left + \
-                    round(random.uniform(stone_size,
-                          (gastove_x + item_fall_limit_right) - stone_size))
-                stone_y = -stone_size
+                item_x = item_fall_limit_left + \
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                stone_y = -item_size
 
             if sugar_y > HEIGHT:
                 sugar_x = item_fall_limit_left + \
-                    round(random.uniform(sugar_size,
-                          (gastove_x + item_fall_limit_right) - sugar_size))
-                sugar_y = -sugar_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                sugar_y = -item_size
 
             if tea_leaves_y > HEIGHT:
                 tea_leaves_x = item_fall_limit_left + \
-                    round(random.uniform(tea_leaves_size,
-                          (gastove_x + item_fall_limit_right) - tea_leaves_size))
-                tea_leaves_y = -tea_leaves_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                tea_leaves_y = -item_size
 
             if milk_y > HEIGHT:
                 milk_x = item_fall_limit_left + \
-                    round(random.uniform(milk_size,
-                          (gastove_x + item_fall_limit_right) - milk_size))
-                milk_y = -milk_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                milk_y = -item_size
 
             if water_y > HEIGHT:
                 water_x = item_fall_limit_left + \
-                    round(random.uniform(water_size,
-                          (gastove_x + item_fall_limit_right) - water_size))
-                water_y = -water_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                water_y = -item_size
 
             upPos()
 
@@ -230,23 +228,23 @@ class octgame:
 
             if cup_rect.colliderect(sugar_rect):
                 item_collect_sound.play()
-                sugar_y = HEIGHT + sugar_size
-                addItems(sugar_number, sugar_count)
+                sugar_y = HEIGHT + item_size
+                addItems(add_number, sugar_count)
 
             if cup_rect.colliderect(tea_leaves_rect):
                 item_collect_sound.play()
-                tea_leaves_y = HEIGHT + tea_leaves_size
-                addItems(tea_leaves_number, tea_leaves_count)
+                tea_leaves_y = HEIGHT + item_size
+                addItems(add_number, tea_leaves_count)
 
             if cup_rect.colliderect(milk_rect):
                 item_collect_sound.play()
-                milk_y = HEIGHT + milk_size
-                addItems(milk_number, milk_count)
+                milk_y = HEIGHT + item_size
+                addItems(add_number, milk_count)
 
             if cup_rect.colliderect(water_rect):
                 item_collect_sound.play()
-                water_y = HEIGHT + water_size
-                addItems(water_number, water_count)
+                water_y = HEIGHT + item_size
+                addItems(add_number, water_count)
 
             if cup_rect.colliderect(stone_rect):
                 cup_breaking_sound.play()
@@ -255,9 +253,9 @@ class octgame:
                 if cup_broke_msg == True:
                     if (dataMoney["coins"] == 0):
                         coin_warning = messagebox.askokcancel(
-                            "One Cup Tea", "There are no coins play in endless mode first to earn some coins. Press Ok to play in endless mode or Cancel to open main menu.")
+                            "One Cup Tea", "There are no coins play in countless mode first to earn some coins. Press Ok to play in countless mode or Cancel to open main menu.")
                         if coin_warning == True:
-                            octgame.endless()
+                            octgame.countless()
                         elif coin_warning == False:
                             octmm.octmainmenu.main_menu()
                     else:
@@ -270,7 +268,7 @@ class octgame:
                     octmm.octmainmenu.main_menu()
                     print("Quitted")
 
-            draw(STONE, stone_x, stone_y)
+            draw(STONE, item_x, stone_y)
             if (len(sugar_count) <= 15):
                 draw(SUGAR, sugar_x, sugar_y)
             else:
@@ -335,9 +333,9 @@ class octgame:
 
             pygame.display.update()
 
-#Endless Mode
+#countless Mode
 
-    def endless():
+    def countless():
 
         MOUSE_POS = pygame.mouse.get_pos()
 
@@ -348,37 +346,37 @@ class octgame:
         CUP_X_ADDITION = 5
         gastove_x = 300
 
-        stone_x = gastove_width + round(random.uniform(stone_size //
-                              2, gastove_x - stone_size // 2))
-        stone_y = -stone_size
+        item_x = gastove_width + round(random.uniform(item_size //
+                              2, gastove_x - item_size // 2))
+        stone_y = -item_size
         stone_speed = 10
 
-        sugar_number = 1
-        sugar_x = gastove_width + round(random.uniform(sugar_size //
-                              2, gastove_x - sugar_size // 2))
-        sugar_y = -sugar_size
+        add_number = 1
+        sugar_x = gastove_width + round(random.uniform(item_size //
+                              2, gastove_x - item_size // 2))
+        sugar_y = -item_size
         sugar_speed = 5
         sugar_count = []
 
-        tea_leaves_number = 1
+        add_number = 1
         tea_leaves_x = gastove_width + \
-            round(random.uniform(tea_leaves_size // 2,
-                  gastove_x - tea_leaves_size // 2))
-        tea_leaves_y = -tea_leaves_size
+            round(random.uniform(item_size // 2,
+                  gastove_x - item_size // 2))
+        tea_leaves_y = -item_size
         tea_leaves_speed = 3
         tea_leaves_count = []
 
-        milk_number = 1
-        milk_x = gastove_width + round(random.uniform(milk_size //
-                             2, gastove_x - milk_size // 2))
-        milk_y = -milk_size
+        add_number = 1
+        milk_x = gastove_width + round(random.uniform(item_size //
+                             2, gastove_x - item_size // 2))
+        milk_y = -item_size
         milk_speed = 7
         milk_count = []
 
-        water_number = 1
-        water_x = gastove_width + round(random.uniform(water_size //
-                              2, gastove_x - water_size // 2))
-        water_y = -water_size
+        add_number = 1
+        water_x = gastove_width + round(random.uniform(item_size //
+                              2, gastove_x - item_size // 2))
+        water_y = -item_size
         water_speed = 7
         water_count = []
 
@@ -394,7 +392,7 @@ class octgame:
         def upPos():
             # update cup_rect position
             cup_rect.move_ip(cup_x - cup_rect.x, cup_y - cup_rect.y)
-            stone_rect.move_ip(stone_x - stone_rect.x, stone_y - stone_rect.y)
+            stone_rect.move_ip(item_x - stone_rect.x, stone_y - stone_rect.y)
             sugar_rect.move_ip(sugar_x - sugar_rect.x, sugar_y - sugar_rect.y)
             tea_leaves_rect.move_ip(
                 tea_leaves_x - tea_leaves_rect.x, tea_leaves_y - tea_leaves_rect.y)
@@ -402,8 +400,7 @@ class octgame:
             water_rect.move_ip(water_x - water_rect.x, water_y - water_rect.y)
 
         while True:
-            MONEY_TEXT = FONT.render(
-                f"Coins: {dataMoney['coins']}", 1, "black")
+            MONEY_TEXT = FONT.render(f"Coins: {dataMoney['coins']}", 1, "black")
 
             clock.tick(60)
             passed_time = time.time() - start_time
@@ -420,7 +417,7 @@ class octgame:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if STOP_BUTTON.checkForInput(MOUSE_POS):
-                        octmm.octmainmenu.main_menu()
+                        octmm.octmainmenu.mainmenu()
 
             TIME_TEXT = FONT.render(f"Time: {hours}:{minutes:02}:{seconds:02}", 1, "black")
             keys = pygame.key.get_pressed()
@@ -428,39 +425,47 @@ class octgame:
                 cup_x -= CUP_X_ADDITION
             if keys[pygame.K_RIGHT] and cup_x <= gastove_x + gastove_x+15:
                 cup_x += CUP_X_ADDITION
+            if keys[pygame.K_SPACE]:
+                startormm = messagebox.askyesno("One Cup Tea", "The game is paused, click yes to start or no to go to main menu.")
+                if not startormm:
+                    octmm.octmainmenu.main_menu()
 
             draw(BACKGROUND, 0, 0)
             draw(GASTOVE, 300, 325)
 
+            for button in [STOP_BUTTON]:
+                button.changeColor(MOUSE_POS)
+                button.update(WIN)
+
             if stone_y > HEIGHT:
-                stone_x = item_fall_limit_left + \
-                    round(random.uniform(stone_size,
-                          (gastove_x + item_fall_limit_right) - stone_size))
-                stone_y = -stone_size
+                item_x = item_fall_limit_left + \
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                stone_y = -item_size
 
             if sugar_y > HEIGHT:
                 sugar_x = item_fall_limit_left + \
-                    round(random.uniform(sugar_size,
-                          (gastove_x + item_fall_limit_right) - sugar_size))
-                sugar_y = -sugar_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                sugar_y = -item_size
 
             if tea_leaves_y > HEIGHT:
                 tea_leaves_x = item_fall_limit_left + \
-                    round(random.uniform(tea_leaves_size,
-                          (gastove_x + item_fall_limit_right) - tea_leaves_size))
-                tea_leaves_y = -tea_leaves_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                tea_leaves_y = -item_size
 
             if milk_y > HEIGHT:
                 milk_x = item_fall_limit_left + \
-                    round(random.uniform(milk_size,
-                          (gastove_x + item_fall_limit_right) - milk_size))
-                milk_y = -milk_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                milk_y = -item_size
 
             if water_y > HEIGHT:
                 water_x = item_fall_limit_left + \
-                    round(random.uniform(water_size,
-                          (gastove_x + item_fall_limit_right) - water_size))
-                water_y = -water_size
+                    round(random.uniform(item_size,
+                          (gastove_x + item_fall_limit_right) - item_size))
+                water_y = -item_size
 
             upPos()
             SUGAR_COUNT_TEXT = FONT.render(
@@ -474,30 +479,30 @@ class octgame:
 
             if cup_rect.colliderect(sugar_rect):
                 item_collect_sound.play()
-                sugar_y = HEIGHT + sugar_size
-                addItems(sugar_number, sugar_count)
+                sugar_y = HEIGHT + item_size
+                addItems(add_number, sugar_count)
 
             if cup_rect.colliderect(tea_leaves_rect):
                 item_collect_sound.play()
-                tea_leaves_y = HEIGHT + tea_leaves_size
-                addItems(tea_leaves_number, tea_leaves_count)
+                tea_leaves_y = HEIGHT + item_size
+                addItems(add_number, tea_leaves_count)
 
             if cup_rect.colliderect(milk_rect):
                 item_collect_sound.play()
-                milk_y = HEIGHT + milk_size
-                addItems(milk_number, milk_count)
+                milk_y = HEIGHT + item_size
+                addItems(add_number, milk_count)
 
             if cup_rect.colliderect(water_rect):
                 item_collect_sound.play()
-                water_y = HEIGHT + water_size
-                addItems(water_number, water_count)
+                water_y = HEIGHT + item_size
+                addItems(add_number, water_count)
 
             if cup_rect.colliderect(stone_rect):
                 cup_breaking_sound.play()
                 cup_broke_msg = messagebox.askretrycancel(
                     "One Cup Tea", "The cup broke.\nDon't let the stones touch the cup, or else the cup will be broken.")
                 if cup_broke_msg == True:
-                    octgame.endless()
+                    octgame.countless()
                     print("Retried")
                 elif cup_broke_msg == False:
                     octmm.octmainmenu.main_menu()
@@ -509,13 +514,13 @@ class octgame:
                 draw(WATER, water_x, water_y)
                 draw(TEA_LEAVES, tea_leaves_x, tea_leaves_y)
                 dataMoney["coins"] += 10
-                endless_mode_coin_collect_sound.play()
+                countless_mode_coin_collect_sound.play()
                 match_count += 1
 
             draw(MONEY_TEXT, 700, 20)
             draw(CUP, cup_x, cup_y)
             draw(TIME_TEXT, 10, 10)
-            draw(STONE, stone_x, stone_y)
+            draw(STONE, item_x, stone_y)
             draw(SUGAR, sugar_x, sugar_y)
             draw(MILK, milk_x, milk_y)
             draw(WATER, water_x, water_y)
