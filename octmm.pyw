@@ -24,13 +24,13 @@ class octmainmenu:
             MOUSE_POS = pygame.mouse.get_pos()
 
             MENU_TEXT = pygame.transform.scale(
-                oct.FONT.render("MAIN MENU", True, "#000000"), (180, 40))
+                oct.FONT.render("MAIN MENU", True, "#000000"), (160, 30))
             MENU_RECT = MENU_TEXT.get_rect(
                 center=(WIDTH / 2, HEIGHT / 2 - 100))
 
-            PLAY_BUTTON = oct.Button(image=pygame.transform.scale(pygame.image.load("images/play_btn.png"), (180, 140)), pos=(500, 300),
+            PLAY_BUTTON = oct.Button(image=pygame.transform.scale(pygame.image.load("images/play_btn.png"), (140, 55)), pos=(500, 260),
                                  text_input="", font=oct.get_font(75), base_color="#d7fcd4", hovering_color="white")
-            PLAY_COUNTLESS_BUTTON = oct.Button(image=pygame.transform.scale(pygame.image.load("images/play_countless_btn.png"), (180, 140)), pos=(500, 380),
+            PLAY_COUNTLESS_BUTTON = oct.Button(image=pygame.transform.scale(pygame.image.load("images/play_countless_btn.png"), (140, 55)), pos=(500, 320),
                                          text_input="", font=oct.get_font(75), base_color="#d7fcd4", hovering_color="white")
 
             WIN.blit(MENU_TEXT, MENU_RECT)

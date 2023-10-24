@@ -9,5 +9,6 @@
     "tea_leaves": "./images/tea_leaves.png",
     "milk": "./images/milk.png",
     "water": "./images/water.png",
+    "shield": "./images/shield.png",
     "database": "./data.txt"
 }

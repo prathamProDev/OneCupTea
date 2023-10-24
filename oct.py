@@ -17,11 +17,6 @@ pygame.mixer.init()
 datasrc = open('data.json')
 data = json.load(datasrc)
 
-dataMoney = {
-    "coins": 0
-}
-
-
 with open("money.json", "r+") as dmf:
     dataMoney = json.load(dmf)
 
@@ -59,7 +54,7 @@ milk_rect = MILK.get_rect()
 WATER = pygame.image.load(data['water'])
 water_rect = WATER.get_rect()
 
-item_size = 50
+item_size = 48
 item_fall_limit_right = 95
 item_fall_limit_left = 280
 
@@ -91,7 +86,7 @@ class octgame:
 
         MOUSE_POS = pygame.mouse.get_pos()
 
-        STOP_BUTTON = Button(image=pygame.transform.scale(pygame.image.load("images/stop_btn.png"), (100, 60)), pos=(800, 100), text_input="", font=get_font(75), base_color="#d7fcd4", hovering_color="white")
+        STOP_BUTTON = Button(image=pygame.transform.scale(pygame.image.load("images/stop_btn.png"), (75, 30)), pos=(760, 75), text_input="", font=get_font(75), base_color="#d7fcd4", hovering_color="white")
 
         cup_x = 450
         cup_y = 510
@@ -100,7 +95,7 @@ class octgame:
 
         add_number = 1
 
-        item_x = gastove_width + round(random.uniform(item_size //
+        stone_x = gastove_width + round(random.uniform(item_size //
                               2, gastove_x - item_size // 2))
         stone_y = -item_size
         stone_speed = 10
@@ -141,7 +136,7 @@ class octgame:
         def upPos():
             # update cup_rect position
             cup_rect.move_ip(cup_x - cup_rect.x, cup_y - cup_rect.y)
-            stone_rect.move_ip(item_x - stone_rect.x, stone_y - stone_rect.y)
+            stone_rect.move_ip(stone_x - stone_rect.x, stone_y - stone_rect.y)
             sugar_rect.move_ip(sugar_x - sugar_rect.x, sugar_y - sugar_rect.y)
             tea_leaves_rect.move_ip(tea_leaves_x - tea_leaves_rect.x, tea_leaves_y - tea_leaves_rect.y)
             milk_rect.move_ip(milk_x - milk_rect.x, milk_y - milk_rect.y)
@@ -186,7 +181,7 @@ class octgame:
                 button.update(WIN)
 
             if stone_y > HEIGHT:
-                item_x = item_fall_limit_left + \
+                stone_x = item_fall_limit_left + \
                     round(random.uniform(item_size,
                           (gastove_x + item_fall_limit_right) - item_size))
                 stone_y = -item_size
@@ -214,6 +209,7 @@ class octgame:
                     round(random.uniform(item_size,
                           (gastove_x + item_fall_limit_right) - item_size))
                 water_y = -item_size
+
 
             upPos()
 
@@ -268,7 +264,9 @@ class octgame:
                     octmm.octmainmenu.main_menu()
                     print("Quitted")
 
-            draw(STONE, item_x, stone_y)
+            draw(STONE, stone_x, stone_y)
+            
+
             if (len(sugar_count) <= 15):
                 draw(SUGAR, sugar_x, sugar_y)
             else:
@@ -339,14 +337,14 @@ class octgame:
 
         MOUSE_POS = pygame.mouse.get_pos()
 
-        STOP_BUTTON = Button(image=pygame.transform.scale(pygame.image.load("images/stop_btn.png"), (100, 60)), pos=(800, 100), text_input="", font=get_font(75), base_color="#d7fcd4", hovering_color="white")
+        STOP_BUTTON = Button(image=pygame.transform.scale(pygame.image.load("images/stop_btn.png"), (75, 30)), pos=(760, 75), text_input="", font=get_font(75), base_color="#d7fcd4", hovering_color="white")
 
         cup_x = 450
         cup_y = 510
         CUP_X_ADDITION = 5
         gastove_x = 300
 
-        item_x = gastove_width + round(random.uniform(item_size //
+        stone_x = gastove_width + round(random.uniform(item_size //
                               2, gastove_x - item_size // 2))
         stone_y = -item_size
         stone_speed = 10
@@ -392,7 +390,7 @@ class octgame:
         def upPos():
             # update cup_rect position
             cup_rect.move_ip(cup_x - cup_rect.x, cup_y - cup_rect.y)
-            stone_rect.move_ip(item_x - stone_rect.x, stone_y - stone_rect.y)
+            stone_rect.move_ip(stone_x - stone_rect.x, stone_y - stone_rect.y)
             sugar_rect.move_ip(sugar_x - sugar_rect.x, sugar_y - sugar_rect.y)
             tea_leaves_rect.move_ip(
                 tea_leaves_x - tea_leaves_rect.x, tea_leaves_y - tea_leaves_rect.y)
@@ -438,7 +436,7 @@ class octgame:
                 button.update(WIN)
 
             if stone_y > HEIGHT:
-                item_x = item_fall_limit_left + \
+                stone_x = item_fall_limit_left + \
                     round(random.uniform(item_size,
                           (gastove_x + item_fall_limit_right) - item_size))
                 stone_y = -item_size
@@ -520,7 +518,7 @@ class octgame:
             draw(MONEY_TEXT, 700, 20)
             draw(CUP, cup_x, cup_y)
             draw(TIME_TEXT, 10, 10)
-            draw(STONE, item_x, stone_y)
+            draw(STONE, stone_x, stone_y)
             draw(SUGAR, sugar_x, sugar_y)
             draw(MILK, milk_x, milk_y)
             draw(WATER, water_x, water_y)
